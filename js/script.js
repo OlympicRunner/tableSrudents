@@ -196,6 +196,12 @@
 
             closedButton.addEventListener('click', () => {
                 formBox.remove()
+                inputName.value = ''
+                inputSurname.value = ''
+                inputLastName.value = ''
+                inputBirthday.value = ''
+                inputFaculty.value = ''
+                inputStartStudy.value = ''
             })
 
             function checkAndAdd () {
@@ -251,7 +257,28 @@
                     studentInfo.Surname = inpSurname
                     studentInfo.LastName = inpLastName
                     studentInfo.Faculty = inpFaculty
-                    console.log(inputBirthday.value)
+
+                    /// считаем сколько лет:
+                    let dateBirthday = inputBirthday.value.split('-')
+                    let dateBirthdayReverse = dateBirthday.reverse()
+                    let dateBirthdayObj = dateBirthdayReverse[0] + '.' + dateBirthdayReverse[1] + '.' + dateBirthdayReverse[2]
+
+                    let now = new Date(); //Текущя дата
+                    let today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); //Текущя дата без времени
+                    let dob = new Date(dateBirthday); //Дата рождения
+                    let dobnow = new Date(today.getFullYear(), dob.getMonth(), dob.getDate()); //ДР в текущем году
+                    let age; //Возраст
+
+                    //Возраст = текущий год - год рождения
+                    age = today.getFullYear() - dob.getFullYear();
+                    //Если ДР в этом году ещё предстоит, то вычитаем из age один год
+                    if (today < dobnow) {
+                    age = age-1;
+                    }
+
+                    studentInfo.date = dateBirthdayObj
+                    studentInfo.age = age
+                    console.log(studentInfo)
 
                 }
                 
@@ -269,24 +296,7 @@
         openForm ()
     }
 
-    function getNumberOfDays(start, end) {
-        const date1 = new Date(start);
-        const date2 = new Date(end);
     
-        // One day in milliseconds
-        const oneDay = 1000 * 60 * 60 * 24;
-    
-        // Calculating the time difference between two dates
-        const diffInTime = date2.getTime() - date1.getTime();
-    
-        // Calculating the no. of days between two dates
-        const diffInDays = Math.round(diffInTime / oneDay);
-    
-        return diffInDays;
-    }
-    
-    console.log(getNumberOfDays("2/1/2022", "3/1/2021"));
-
     createStructure ()
     
 
