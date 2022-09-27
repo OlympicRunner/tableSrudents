@@ -419,6 +419,27 @@
 
             /// сортировка по дате поступленя
 
+            dateStudyItem.addEventListener('click', () => {
+                let sortNamesList =  []
+                
+                for (let item of students) {
+                    sortNamesList.push(item.studying)
+                }
+                sortNamesList.sort()
+                let ulList = document.querySelector('.table-items')
+                for (let j of sortNamesList) {
+                    for (let item of ulList.childNodes) {
+                        let itemElem = item.textContent.split(' ')
+                        let itemNames = itemElem[8]
+                        if (String(itemNames) == String(j)) {
+                            ulList.appendChild(item)
+                        } 
+                       
+                    }
+                }
+                
+            })
+
         }
         btnsSort ()
         openForm ()
