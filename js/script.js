@@ -1,5 +1,7 @@
 (() => {
-    let students = []
+    let students = [
+
+    ]
 
     function createStructure () {
         const container = document.querySelector('.container')
@@ -67,26 +69,12 @@
         numbersList.classList.add('list')
         structureBox.append(numbersList)
 
-        const namesList = document.createElement('ul')
-        namesList.classList.add('names-list')
-        namesList.classList.add('list')
-        structureBox.append(namesList)
 
-        const facultyList = document.createElement('ul')
-        facultyList.classList.add('faculty-list')
-        facultyList.classList.add('list')
-        structureBox.append(facultyList)
 
-        const birthdayList = document.createElement('ul')
-        birthdayList.classList.add('birthday-list')
-        birthdayList.classList.add('list')
-        structureBox.append(birthdayList)
-
-        const dateStudyList = document.createElement('ul')
-        dateStudyList.classList.add('dateStudy-list')
-        dateStudyList.classList.add('list')
-        structureBox.append(dateStudyList)
-
+        const tableItems = document.createElement('ul')
+        tableItems.classList.add('table-items')
+        tableItems.classList.add('list')
+        structureBox.append(tableItems)
 
         /// робим кнопку для додавання данных 
 
@@ -253,10 +241,10 @@
                     let inpLastName = (inputLastName.value.trim().toLocaleLowerCase())[0].toLocaleUpperCase() + (inputLastName.value.trim().toLocaleLowerCase()).slice(1)
                     let inpFaculty = (inputFaculty.value.trim().toLocaleLowerCase())[0].toLocaleUpperCase() + (inputFaculty.value.trim().toLocaleLowerCase()).slice(1)
 
-                    studentInfo.Name = inpName
-                    studentInfo.Surname = inpSurname
-                    studentInfo.LastName = inpLastName
-                    studentInfo.Faculty = inpFaculty
+                    studentInfo.Names = inpName + ' ' + inpSurname + ' ' + inpLastName + ' '
+                    // studentInfo.Surname = inpSurname
+                    // studentInfo.LastName = inpLastName
+                    studentInfo.Faculty = inpFaculty + ' '
 
                     /// считаем сколько лет:
                     let dateBirthday = inputBirthday.value.split('-')
@@ -276,9 +264,29 @@
                     age = age-1;
                     }
 
-                    studentInfo.date = dateBirthdayObj
-                    studentInfo.age = age
-                    console.log(studentInfo)
+                    studentInfo.dateBirthday = dateBirthdayObj
+                    studentInfo.age = '(' + age + ' лет ) '
+
+                    /// года учебы
+
+                    let startStudy = inputStartStudy.value.split('-')
+                    let studyProcess = now.getFullYear() - startStudy[0]
+                    let dateStudy = Number(startStudy[0]) + 4
+                    if (studyProcess > 4) {
+                        
+                        studentInfo.studying = startStudy[0] + '-' + dateStudy
+                        studentInfo.status = 'Закончил'
+                    } else {
+                        if (studyProcess == 4 && now.getMonth() > 8) {
+                            studentInfo.studying = startStudy[0] + '-' + dateStudy
+                            studentInfo.status = 'Закончил'
+                        } else {
+                            studentInfo.studying = startStudy[0] + '-' + dateStudy
+                            studentInfo.status = studyProcess + ' Курс'
+                        }
+                    }
+
+                    students.push(studentInfo)
 
                 }
                 
@@ -288,16 +296,136 @@
                 e.preventDefault()
                 
                 checkAndAdd ()
+
+                // delTableitem ()
+
+                if (students.length > 0) {
+                    createTableItem (students.length - 1)
+                } else {
+                    createTableItem(0)
+                }
+           
+            })
+
+            /// удаляем все дочерние li скрафченные 
+
+            function delTableitem () {
+                let tableItems = document.querySelectorAll('.table-item')
+
+                for (let item of tableItems) {
+                    item.remove()
+                }
+            }
+
+            /// крафтим елемент таблицы 
+            
+            function createTableItem (i = 0) {
+                const tableItem = document.createElement('li')
+                tableItem.classList.add('table-item')
+                tableItems.append(tableItem)
+
+                const itemName = document.createElement('div')
+                itemName.classList.add('item-sett')
+                itemName.textContent = students[i].Names
+                tableItem.append(itemName)
+
+                const itemFaculty = document.createElement('div')
+                itemFaculty.classList.add('item-sett')
+                itemFaculty.textContent = students[i].Faculty
+                tableItem.append(itemFaculty)
+
+
+                const itemBirthday = document.createElement('div')
+                itemBirthday.classList.add('item-sett')
+                itemBirthday.textContent = students[i].dateBirthday + ' ' + students[i].age
+                tableItem.append(itemBirthday)
+
+                const itemStudy = document.createElement('div')
+                itemStudy.classList.add('item-sett')
+                itemStudy.textContent = students[i].studying + ' (' + students[i].status + ')'
+                tableItem.append(itemStudy)
+            }
+            
+            
+        }
+
+        function btnsSort () {
+           
+            /// сортировка по ФИО
+
+            namesItem.addEventListener('click', () => {
+                let sortNamesList =  []
+                
+                for (let item of students) {
+                    sortNamesList.push(item.Names)
+                }
+                sortNamesList.sort()
+                let ulList = document.querySelector('.table-items')
+                for (let j of sortNamesList) {
+                    for (let item of ulList.childNodes) {
+                        let itemElem = item.textContent.split(' ')
+                        let itemNames = itemElem[0] + ' ' + itemElem[1] + ' ' + itemElem[2]
+                        if (String(itemNames + ' ') == String(j)) {
+                            ulList.appendChild(item)
+                        } 
+                    }
+                }
+            })
+
+            /// сортировка по  факультетам
+
+            facultyItem.addEventListener('click', () => {
+                let sortNamesList =  []
+                
+                for (let item of students) {
+                    sortNamesList.push(item.Faculty)
+                }
+                sortNamesList.sort()
+                let ulList = document.querySelector('.table-items')
+                for (let j of sortNamesList) {
+                    for (let item of ulList.childNodes) {
+                        let itemElem = item.textContent.split(' ')
+                        let itemNames = itemElem[3]
+                        if (String(itemNames + ' ') == String(j)) {
+                            ulList.appendChild(item)
+                        } 
+                    }
+                }
                 
             })
 
-            
+            /// сортировка по дате рождения
+
+            birthdayItem.addEventListener('click', () => {
+                let sortNamesList =  []
+                
+                for (let item of students) {
+                    sortNamesList.push(item.dateBirthday)
+                }
+                sortNamesList.sort().reverse()
+                let ulList = document.querySelector('.table-items')
+                for (let j of sortNamesList) {
+                    for (let item of ulList.childNodes) {
+                        let itemElem = item.textContent.split(' ')
+                        let itemNames = itemElem[4]
+                        if (String(itemNames) == String(j)) {
+                            ulList.appendChild(item)
+                            
+                        } 
+                    }
+                }
+                
+            })
+
+            /// сортировка по дате поступленя
+
         }
+        btnsSort ()
         openForm ()
     }
 
-    
+
     createStructure ()
-    
+  
 
 })();

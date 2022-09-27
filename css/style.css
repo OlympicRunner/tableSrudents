@@ -1,3 +1,8 @@
+html {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
 @font-face {
     font-family: "Gilroy";
     src: local("Gilroy-UltraLight"), url("../fonts/Gilroy-UltraLight.woff2") format("woff2");
@@ -5,6 +10,20 @@
     font-weight: 600;
     font-style: normal;
     font-display: swap;
+}
+
+button {
+    padding: 0;
+    border: none;
+    /* background-color: transparent; */
+    cursor: pointer;
+    outline: none;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 body {
@@ -115,3 +134,20 @@ body {
 .list {
     border: 1px solid gray
 }
+
+.table-items {
+    grid-column: 4 span;
+}
+
+.table-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.item-sett {
+    display: flex;
+    
+    align-items: center;
+    font-size: 25px;
+}
+
