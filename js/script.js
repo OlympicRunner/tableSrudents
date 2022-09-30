@@ -21,18 +21,26 @@
 
         const filterNames = document.createElement('input')
         filterNames.classList.add('filter-names')
+        filterNames.classList.add('filter-sett')
+        filterNames.setAttribute('placeholder', 'Чето-то из ФИО )')
         structureBox.append(filterNames)
 
         const filterFaculty = document.createElement('input')
-        filterNames.classList.add('filter-faculty')
+        filterFaculty.classList.add('filter-faculty')
+        filterFaculty.classList.add('filter-sett')
+        filterFaculty.setAttribute('placeholder', 'Название факультета')
         structureBox.append(filterFaculty)
 
         const filterBirthday = document.createElement('input')
-        filterNames.classList.add('filter-birthday')
+        filterBirthday.classList.add('filter-birthday')
+        filterBirthday.classList.add('filter-sett')
+        filterBirthday.setAttribute('type', 'date')
         structureBox.append(filterBirthday)
 
         const filterDateStudy = document.createElement('input')
-        filterNames.classList.add('filter-dateStudy')
+        filterDateStudy.classList.add('filter-dateStudy')
+        filterDateStudy.classList.add('filter-sett')
+        filterDateStudy.setAttribute('placeholder', 'Год начала обучения')
         structureBox.append(filterDateStudy)
 
         const numbers = document.createElement('h2')
@@ -80,7 +88,7 @@
 
         const addStudent = document.createElement('button')
         addStudent.classList.add('add-student')
-        addStudent.textContent = 'Добавить студента'
+        addStudent.textContent = '+'
         container.append(addStudent)
 
         function openForm () {
@@ -192,7 +200,7 @@
                 inputStartStudy.value = ''
             })
 
-            function checkAndAdd () {
+            function checkAndAdd () {   
                 let j = 0 /// индекс проверки если больше 0 то проверка не пройдена
                 
                 function checkItemValue (inputName, errorText, classTriger) {
@@ -202,6 +210,7 @@
 
                         if (document.querySelector('.' + classTriger) == null) {
                             let nameError = document.createElement('div')
+                            nameError.classList.add('error-sett')
                             nameError.classList.add(classTriger)
                             nameError.textContent = errorText
                             errorPlace.append(nameError)
@@ -218,6 +227,7 @@
                         }
 
                     }
+                    
                 }
 
 
@@ -229,9 +239,9 @@
                 checkItemValue(inputStartStudy, 'Введите год нчала обучения', 'startstudy-error')
                 checkItemValue(inputFaculty, 'Введите название факультета', 'faculty-error')
 
-
+                
                 /// формируем Объект из полученных данных
-                if (j < 6) {/// временно до 3 ошибок
+                if (j === 0) {
                     // проверка на наличие идентичного , еще стоит сделать
                     let studentInfo = {}
                     // let names = inputName.value + inputSurname.value + inputLastName.value
@@ -287,6 +297,7 @@
                     }
 
                     students.push(studentInfo)
+                    
 
                 }
                 
@@ -296,32 +307,35 @@
                 e.preventDefault()
                 
                 checkAndAdd ()
-
-                // delTableitem ()
-
-                if (students.length > 0) {
-                    createTableItem (students.length - 1)
-                } else {
-                    createTableItem(0)
+                // console.log()
+                if (++tableItems.childNodes.length  == students.length) {
+                    if (students.length > 0) {
+                        createTableItem (students.length - 1)
+                    } else {
+                        createTableItem(0)
+                    }
                 }
-           
+
+                
+                inputName.value = ''
+                inputSurname.value = ''
+                inputLastName.value = ''
+                inputBirthday.value = ''
+                inputFaculty.value = ''
+                inputStartStudy.value = ''
+                numeration ()
             })
 
-            /// удаляем все дочерние li скрафченные 
+            
 
-            function delTableitem () {
-                let tableItems = document.querySelectorAll('.table-item')
 
-                for (let item of tableItems) {
-                    item.remove()
-                }
-            }
 
             /// крафтим елемент таблицы 
             
             function createTableItem (i = 0) {
                 const tableItem = document.createElement('li')
                 tableItem.classList.add('table-item')
+                tableItem.setAttribute('alt', '0')
                 tableItems.append(tableItem)
 
                 const itemName = document.createElement('div')
@@ -348,6 +362,37 @@
             
             
         }
+        /// нумерация скрафченных елементов, проверка их количества и отображение в виде списка первой колонкой
+        function numeration () {
+
+            let findListItems = document.querySelector('.table-items')
+            // let lengthListItems = findListItems.childNodes.length
+            let j = 0
+            for (let item of findListItems.childNodes) {
+                if (item.getAttribute('alt') == '0') {
+                    j++
+                }
+                // console.log(item.getAttribute('alt') == '1')
+            }
+            console.log(j)
+            /// чистим список перед новым циклом создания
+            // let findNumberItem = document.querySelector('.number-item')
+            if (numbersList.childNodes.length > 0 ) {
+                while (numbersList.firstChild) {
+                    numbersList.removeChild(numbersList.firstChild)
+                }
+                
+            }
+            // numbersList.removeChild(findNumberItem)
+            
+
+            for (i = 1; i <= j; i++) {
+                const numberItem = document.createElement('li')
+                numberItem.classList.add('number-item')
+                numberItem.textContent = Number(i)  
+                numbersList.append(numberItem)
+            }
+        }
 
         function btnsSort () {
            
@@ -370,6 +415,7 @@
                         } 
                     }
                 }
+                
             })
 
             /// сортировка по  факультетам
@@ -441,8 +487,150 @@
             })
 
         }
+        /// фильтруем =)
+        function filters () {
+            let nameInt
+            let ulList = document.querySelector('.table-items').childNodes
+            function namesFilter () {
+                nameInt = setTimeout( () => {
+                    for (let item of ulList) {
+                        let nameList = item.textContent.split(' ')
+                        if (nameList[0] !== filterNames.value || nameList[1] !== filterNames.value || nameList[2] !== filterNames.value) {
+                            item.classList.remove('name-none')
+                            if (!(item.classList.contains('faculty-none') || item.classList.contains('birthday-none') || item.classList.contains('study-none'))) {
+                                item.setAttribute('style', 'display: grid')
+                                item.setAttribute('alt', '0')
+                                numeration ()
+                            }
+                        }
+                    }
+                    for (let item of ulList) {
+                        let nameList = item.textContent.split(' ')
+                        if (nameList[0] == filterNames.value || nameList[1] == filterNames.value || nameList[2] == filterNames.value) {
+                            item.classList.add('name-none')
+                            item.setAttribute('style', 'display: none')
+                            item.setAttribute('alt', '1')
+                            numeration ()
+                        }  
+                    }
+                   
+                }, 1500)
+                
+            }
+
+            filterNames.addEventListener('input', () => {
+                clearTimeout (nameInt)
+                namesFilter ()
+                
+            })
+
+            let facultyInt
+
+            function facultyFilter () {
+                facultyInt = setTimeout( () => {
+                    for (let item of ulList) {
+                        let nameList = item.textContent.split(' ')
+                        if (nameList[3] !== filterFaculty.value) {
+                            item.classList.remove('faculty-none')
+                            if (!(item.classList.contains('name-none') || item.classList.contains('birthday-none') || item.classList.contains('study-none'))) {
+                                item.setAttribute('style', 'display: grid')
+                                item.setAttribute('alt', '0')
+                            }
+                        }
+                    }
+                    for (let item of ulList) {
+                        let nameList = item.textContent.split(' ')
+                        if (nameList[3] == filterFaculty.value) {
+                            item.classList.add('faculty-none')
+                            item.setAttribute('style', 'display: none')
+                            item.setAttribute('alt', '1')
+                        }  
+                    }
+
+                }, 1500)
+            }
+
+            filterFaculty.addEventListener('input', () => {
+                clearTimeout (facultyInt)
+                facultyFilter ()
+                numeration ()
+            })
+
+            let birthdayInt
+            function birthdayFilter () {
+                birthdayInt = setTimeout( () => {
+                    let beforeConvertBirthday = filterBirthday.value.split('-').reverse()
+                    let afterConvertBerthday = beforeConvertBirthday[0] + '.' + beforeConvertBirthday[1] + '.' + beforeConvertBirthday[2]
+                    for (let item of ulList) {
+                        let nameList = item.textContent.split(' ')
+                        if (nameList[4] !== afterConvertBerthday) {
+                            item.classList.remove('birthday-none')
+                            if (!(item.classList.contains('name-none') || item.classList.contains('faculty-none') || item.classList.contains('study-none'))) {
+                                item.setAttribute('style', 'display: grid')
+                                item.setAttribute('alt', '0')
+                            }
+                        }
+                    }
+                    for (let item of ulList) {
+                        let nameList = item.textContent.split(' ')
+                        if (nameList[4] == afterConvertBerthday) {
+                            item.classList.add('birthday-none')
+                            item.setAttribute('style', 'display: none')
+                            item.setAttribute('alt', '1')
+                        }  
+                    }
+                }, 1500)
+            }
+
+            filterBirthday.addEventListener('input', () => {
+                clearTimeout (birthdayInt)
+                birthdayFilter ()
+                numeration ()
+            })
+
+            let studyInt
+            function dateStudyFilter () {
+                studyInt = setTimeout( () => {
+                    for (let item of ulList) {
+                        let nameList = item.textContent.split(' ')
+                        let startDate = nameList[8].split('-')
+                        
+                        if (startDate[0] !== filterDateStudy.value) {
+                            item.classList.remove('faculty-none')
+                            if (!(item.classList.contains('name-none') || item.classList.contains('birthday-none') || item.classList.contains('faculty-none'))) {
+                                item.setAttribute('style', 'display: grid')
+                                item.setAttribute('alt', '0')
+                            }
+                        }
+                    }
+                    for (let item of ulList) {
+                        let nameList = item.textContent.split(' ')
+                        let startDate = nameList[8].split('-')
+                        if (startDate[0] == filterDateStudy.value) {
+                            item.classList.add('study-none')
+                            item.setAttribute('style', 'display: none')
+                            item.setAttribute('alt', '1')
+                        }  
+                    }
+
+                }, 1500)
+            }
+
+            filterDateStudy.addEventListener('input', () => {
+                clearTimeout (studyInt)
+                dateStudyFilter ()
+                numeration ()
+            })
+        }
+
+
+
         btnsSort ()
         openForm ()
+        filters ()
+        
+
+        
     }
 
 

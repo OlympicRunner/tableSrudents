@@ -69,7 +69,7 @@ body {
     position: absolute;
     top: 10px;
     right: 10px;
-    font-size: 27px;
+    font-size: 35px;
     width: 35px;
     height: 35px;
     background: none;
@@ -87,11 +87,38 @@ body {
 }
 
 .input {
+    padding-left: 30px;
+    padding-right: 30px;
     font-size: 30px;
+    border-radius: 10px;
+    transition: all ease-in-out .3s;
+}
+
+.input:hover {
+    background-color: rgb(212, 234, 203);
+}
+
+.input:active {
+    outline: none;
+    
+}
+.input:focus {
+    outline: none;
+    background-color: rgb(212, 234, 203);
 }
 
 .form-btn {
+    border-radius: 10px;
     font-size: 40px;
+    transition: all ease-in-out .3s;
+}
+
+.form-btn:hover {
+    background-color: #c2ff81;
+}
+
+.form-btn:active {
+    background-color: #a7ff4a;
 }
 
 .error-place {
@@ -101,53 +128,164 @@ body {
     grid-gap: 10px;
 }
 
+.error-sett {
+    padding-top: 15px;
+    padding-left: 17px;
+    background-color: #ffb4b4;
+    border-radius: 5px;
+    color: black;
+    padding: 15px;
+    font-size: 20px;
+}
+
 .add-student {
     position: absolute;
-    top: 600px;
-    width: 300px;
-    height: 300px;
-    border-radius: 150px;
-    font-size: 50px;
+    top: 158px;
+    left: 44px;
+    width: 100px;
+    height: 100px;
+    background-color: rgb(201, 255, 139);
+    border-radius: 10px;
+    font-size: 80px;
+    transition: all ease-in-out .3s ;
+}
+
+.add-student:hover {
+    background-color: rgb(183, 255, 100);
+    scale: 1.1;
+    color: white;
+}
+
+.add-student:active {
+    background-color: rgb(134, 185, 76);
+    
 }
 
 .structure-box {
+    position: relative;
     display: grid;
     grid-template-columns: 150px 1fr 1fr 1fr 1fr;
-    grid-template-rows: 100px 100px 100%;
-    /* border: 1px solid black; */
+    grid-template-rows: 100px 100px ;
     text-align: center;
 }
 
+
 .filter-row {
-    padding-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 10px;
+    margin: 0;
+    border: 1px solid black;
+
     font-size: 30px;
 }
 
+.filter-dateStudy {
+    border-top-right-radius: 10px;
+}
+
 .numbers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
     font-size: 35px;
 }
 
 .btn {
+    position: relative;
+    border-right: 1px solid black;
     font-size: 30px;
+    color: black;
+    background-color: rgb(215, 215, 215);
+    transition: all ease-in-out .3s;
 }
+
+.btn::after {
+    position: absolute;
+    content: '';
+    top: 29px;
+    left: 30px;
+    width: 25px;
+    height: 25px;
+    transform: rotate(45deg);
+    border-bottom: 1px solid gray;
+    border-right: 1px solid gray;
+    transition: all ease-in-out .3s;
+}
+
+.btn:hover {
+    background-color: rgb(241, 241, 241);
+}
+
+
+.btn:active {
+    background-color: rgb(182, 182, 182);
+}
+
+
+
 
 .list {
     border: 1px solid gray
 }
 
 .table-items {
+    /* margin-top: 10px; */
+    border-left: none;
     grid-column: 4 span;
-}
-
-.table-item {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    
 }
 
 .item-sett {
+    width: 379px;
     display: flex;
-    
     align-items: center;
+    font-size: 25px;
+    padding: 10px;
+    border-right: 1px solid gray;
+    transition: all ease-in-out .3s;
+}
+
+
+.number-item {
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 5px;
     font-size: 25px;
 }
 
+
+.table-item {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    transition: all ease-in-out.3s;
+}
+
+.table-item:hover {
+    background-color: rgb(223, 255, 178);
+    
+}
+
+
+.item-sett:last-child {
+    border: none;
+}
+
+.filter-sett {
+    padding: 10px;
+    border: 1px solid black;
+    border-left: none;
+    background-color: rgb(210, 255, 146);
+    font-size: 30px;
+}
+
+
+.filter-sett:focus {
+    outline: none;
+}
