@@ -1,0 +1,8 @@
+
+let filter = {
+
+    doFilter : function () {
+        
+    }
+
+}

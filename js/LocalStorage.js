@@ -5,7 +5,7 @@ let localUp = {
         let getStorage = JSON.parse(localStorage.getItem('tableInfo'))
         // localStorage.setItem('dd', JSON.stringify('lorem'))
         if(getStorage !== null) {
-
+            // students = []
             for (let item of getStorage) {
                 students.push(item)
             }
@@ -15,6 +15,8 @@ let localUp = {
     },
 
     localAdd : function (students) {
+
+        localStorage.clear('taleInfo')
         localStorage.setItem('tableInfo', JSON.stringify(students)) /// синхрон students и localStorage кажыдй раз при использовании функции
     }
 }

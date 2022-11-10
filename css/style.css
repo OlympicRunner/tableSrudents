@@ -241,6 +241,10 @@ body {
     
 }
 
+.table-item i {
+    font-size: 0px;
+}
+
 .item-sett {
     width: 379px;
     display: flex;

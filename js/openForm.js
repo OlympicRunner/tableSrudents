@@ -104,6 +104,7 @@ let craftOpen = {
 
         addStudent.addEventListener('click', () => {
             container.append(formBox)
+            // addId () ///test
         })
 
         closedButton.addEventListener('click', () => {
@@ -205,9 +206,16 @@ let craftOpen = {
                     }
                 }
 
+                let lastIndex = students.length
+                let willId
+                if (lastIndex > 0) {
+                    willId = Number(students[lastIndex - 1].id) + 1
+                    
+                } else {
+                    willId = 1
+                }
+                studentInfo.id = willId
                 students.push(studentInfo)
-                
-
 
             }
         }
@@ -218,7 +226,7 @@ let craftOpen = {
 
             checkAndAdd () /// записали данные в объект 
             // /      ----------------------------- крафтим только елементы которые еть в массиве, возможно еще при каждом событии удаляем все и по новой крафтим 
-
+            console.log(students)
 
 
             let tableItemsPlus = tableItems.childNodes.length

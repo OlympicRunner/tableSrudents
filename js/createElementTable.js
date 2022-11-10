@@ -1,4 +1,6 @@
 import {numeration} from './numeration.js'
+import {localPush} from './LocalStorage.js'
+import {localPull} from './LocalStorage.js'
 
 // test 
 // import{localPush} from './LocalStorage.js'
@@ -33,6 +35,11 @@ let createElem = {
         itemStudy.textContent = students[i].studying + ' (' + students[i].status + ')'
         tableItem.append(itemStudy)
 
+        const forId = document.createElement('i')
+        forId.style.height = 0
+        forId.textContent = students[i].id
+        tableItem.append(forId)
+
         const btnX = document.createElement('button')
         btnX.classList.add('item-dell')
         btnX.textContent = 'X'
@@ -40,52 +47,30 @@ let createElem = {
 
         btnX.addEventListener('click', () => {
             
-            console.log(students)
-            dellElem (students)
+
+            dellElemStudents ()
+            
             btnX.parentElement.remove()
             numeration()
-            
+            // console.log(students)
 
         })
         
         /// поиск и удаление елемента из students
-
-        function dellElem () {
-
-            let newStudents = []
+        function dellElemStudents () {
             
+            let elemX = btnX.parentNode.childNodes[4].textContent
             
-            for (let item of students) {
-                let i = 0
-                if (item.Faculty !== String(btnX.parentElement.childNodes[1].textContent)) {
-                    i++
-                }
-                if (item.Names !== String(btnX.parentElement.childNodes[0].textContent)) {
-                    i++
-                }
-                if (item.dateBirthday !== btnX.parentElement.childNodes[2].textContent.split(' ')[0]) {
-                    i++
-                }
-                if (item.studying !== btnX.parentElement.childNodes[3].textContent.split(' ')[0]) {
-                    i++
-                }
-
-                if (i > 0) {
-                    newStudents.push(item)
-                }
-                // console.log('+')
-            }
+            let studentsNew = students.filter(item => item.id != elemX)
             
-            students = []
-            
-            for (let item of newStudents) {
-                students.push(item)
-
-            }
-            console.log(students)
+            localPush (studentsNew)
+            // localPull(students)
+        }
+        
+        
             
                  // if (item.Faculty === String(btnX.parentElement.childNodes[1].textContent) && item.Names === String(btnX.parentElement.childNodes[0].textContent) && item.dateBirthday === btnX.parentElement.childNodes[2].textContent.split(' ')[0] && item.studying === btnX.parentElement.childNodes[3].textContent.split(' ')[0]) {
-        }
+        // }
         
         
     }
