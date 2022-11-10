@@ -108,6 +108,7 @@ body {
 }
 
 .form-btn {
+    position: relative;
     border-radius: 10px;
     font-size: 40px;
     transition: all ease-in-out .3s;
@@ -147,7 +148,7 @@ body {
     background-color: rgb(201, 255, 139);
     border-radius: 10px;
     font-size: 80px;
-    transition: all ease-in-out .3s ;
+    transition: .3s all ease-in-out;
 }
 
 .add-student:hover {
@@ -260,6 +261,7 @@ body {
 
 
 .table-item {
+    position: relative;
     margin-top: 10px;
     margin-bottom: 5px;
     display: grid;
@@ -270,6 +272,15 @@ body {
 .table-item:hover {
     background-color: rgb(223, 255, 178);
     
+}
+
+.item-dell {
+    width: 40px;
+    font-size: 30px;
+    top: 5px;
+    height: 40px;
+    position: absolute;
+    right: 10px;
 }
 
 
