@@ -2,6 +2,7 @@ import {numeration} from './numeration.js'
 import {localPush} from './LocalStorage.js'
 import {localPull} from './LocalStorage.js'
 
+
 // test 
 // import{localPush} from './LocalStorage.js'
 
@@ -47,32 +48,32 @@ let createElem = {
 
         btnX.addEventListener('click', () => {
             
-
-            dellElemStudents ()
+            let id = btnX.parentNode.childNodes[4].textContent
+            dellElemStudents (id)
+            // localPull(students)
+            
             
             btnX.parentElement.remove()
+        
+            
+            console.log(students)
+            console.log(JSON.parse(localStorage.getItem('tableInfo')))
+            
             numeration()
-            // console.log(students)
 
         })
         
+
+
         /// поиск и удаление елемента из students
-        function dellElemStudents () {
+        function dellElemStudents (id = 0) {
+
+            let studentsNew = students.filter(item => item.id != id)
             
-            let elemX = btnX.parentNode.childNodes[4].textContent
-            
-            let studentsNew = students.filter(item => item.id != elemX)
-            
-            localPush (studentsNew)
-            // localPull(students)
+            localPush(studentsNew)
+            location.reload()  /// что-то не выходило и тут я немного поколхозил
         }
-        
-        
-            
-                 // if (item.Faculty === String(btnX.parentElement.childNodes[1].textContent) && item.Names === String(btnX.parentElement.childNodes[0].textContent) && item.dateBirthday === btnX.parentElement.childNodes[2].textContent.split(' ')[0] && item.studying === btnX.parentElement.childNodes[3].textContent.split(' ')[0]) {
-        // }
-        
-        
+                
     }
 }
 

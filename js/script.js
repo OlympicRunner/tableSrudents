@@ -4,6 +4,7 @@ import {createElemTable} from './createElementTable.js'
 import {btnsSort} from './sort.js'
 import {createAllElements} from './createAllElements.js'
 import {localPull} from './LocalStorage.js'
+import {filter} from './filter.js'
 
 (() => {
 
@@ -18,5 +19,7 @@ import {localPull} from './LocalStorage.js'
 
     createForm (students)
     btnsSort(students)
+
+    // filter()
     
 })();

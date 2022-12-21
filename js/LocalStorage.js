@@ -15,8 +15,8 @@ let localUp = {
     },
 
     localAdd : function (students) {
-
-        localStorage.clear('taleInfo')
+        
+        localStorage.clear('tableInfo')
         localStorage.setItem('tableInfo', JSON.stringify(students)) /// синхрон students и localStorage кажыдй раз при использовании функции
     }
 }
