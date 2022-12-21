@@ -14,12 +14,12 @@ import {filter} from './filter.js'
     
 
     createStructure ()
-    createAllElements (students)
+    createAllElements (students) /// так же для фильтра
 
 
     createForm (students)
     btnsSort(students)
 
-    // filter()
+    filter()
     
 })();
